@@ -9,9 +9,9 @@
     <body>
         <!-- header with Name and navbar -->
         <header>
-            <div>
+            
                 <h2>NickV</h2>
-            </div>
+            
             <nav>
                 <!-- nav links to the sections ids -->
                 <ul>
@@ -23,14 +23,21 @@
             </nav>
             
         </header>
-        <div class="hero"><h3>text here</h3></div>
+        <!-- hero contains image, wrap helps align the header with the rest of the layout -->
+        <div class="hero">
+            <div class="wrap">
+                <h3>Full Stack Developer</h3>
+            </div>
+            
+        </div>
         <main>
             <!-- This section contains the About me portion of the website -->
             <section id="about-me">
-                <h1>About me</h1>
+                <h1>About Me</h1>
                 <div class="container">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
+                    <img src="./assets/images/avatar.png" class="avatar">
+                    <p>I'm a full stack developer, photographer, videographer, colorist, and dog trainer! What else can I say?</p>
+                    
                 </div> 
             </section>
             <!-- this section contains the work portion, it has divs that act as a buttons -->
@@ -39,49 +46,59 @@
                 <div class="container">
                     <!-- each div id is named as work-x x=number so it can easily be expanded in the future -->
                     <div id="work-0" class="work-item">
-                        <div class="work-desc">
-                            <h4>Name</h4>
-                            <p>what was code in</p>
-                        </div>
+                        <a href="https://github.com/nickverneck/Refactor" target="_blank" class="work-link" >
                         
+                        <div class="work-desc">
+                            <h4>Refactor</h4>
+                            <p>Html/CSS</p>
+                        
+                        </div>
+                    </a>    
                     </div>
+               
+                
                     <div id="work-1" class="work-item">
+                        <a href="#" class="work-link">
                         <div class="work-desc">
-                            <h4>Name</h4>
-                            <p>what was code in</p>
+                            <h4>MacOS VM</h4>
+                            <p>Linux KVM</p>
                         </div>
-                        
+                    </a>        
                     </div>
+                
                     <div id="work-2" class="work-item">
+                        <a href="https://www.nickverneck.com/photos/" target="_blank" class="work-link">
                         <div class="work-desc">
-                            <h4>Name</h4>
-                            <p>what was code in</p>
+                            <h4>Photo Portfolio</h4>
+                            <p>Html/CSS/JS/PHP</p>
                         </div>
-                        
+                    </a>
                     </div>
                     <div id="work-3" class="work-item">
+                        <a href="#" class="work-link">
                         <div class="work-desc">
-                            <h4>Name</h4>
-                            <p>what was code in</p>
+                            <h4>Instagram Live RMTP</h4>
+                            <p>Python/Nodejs</p>
                         </div>
-                        
+                        </a>
                     </div>
                     <div id="work-4" class="work-item">
+                        <a href="#" class="work-link">
                         <div class="work-desc">
-                            <h4>Name</h4>
-                            <p>what was code in</p>
+                            <h4>Something cool</h4>
+                            <p>MEARN Stack</p>
                         </div>
-                        
+                        </a>
                     </div>
                 </div>
             </section>
             <section id="contact-me">
                 <h1>Contact me</h1> 
                 <div class="container">
-                    <a href="">3214072201</a>
-                    <a href="">nicollas@gmail.com</a>
-                    <a href="">gitHub</a>
-                    <a href="">www.nickverneck.com</a>
+                    <a href="tel:4072220189">4072220189</a>
+                    <a href="mailto:nicollas@gmail.com">nicollas@gmail.com</a>
+                    <a href="https://github.com/nickverneck">gitHub</a>
+                    <a href="https://www.nickverneck.com/">www.nickverneck.com</a>
                 </div>
             </section>
         </main>
