@@ -7,7 +7,7 @@ My portfolio page site using html and CSS with flexbox to get a  mobile responsi
 ## wide screen
 
 ![wide 1080p](./assets/images/SS1080.jpg)
-![wide 1080p2](./assets/images/SS10801.jpg)
+![wide 1080p2](./assets/images/ss10801.jpg)
 
 ## mobile screen
 
