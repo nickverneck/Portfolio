@@ -43,7 +43,7 @@
   - Integrate hero section with 3D background
   - _Requirements: 1.1, 1.2, 1.3, 1.4_
 
-- [ ] 7. Create company carousel component
+- [x] 7. Create company carousel component
   - Build CompanyCarousel.svelte with carousel functionality
   - Implement glassmorphism styling for company logo cards
   - Add click-to-navigate functionality to company websites

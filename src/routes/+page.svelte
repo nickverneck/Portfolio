@@ -2,6 +2,10 @@
   import Background3D from '$lib/components/Background3D.svelte';
   import Header from '$lib/components/Header.svelte';
   import Hero from '$lib/components/Hero.svelte';
+  import CompanyCarousel from '$lib/components/CompanyCarousel.svelte';
+  import companiesData from '$lib/data/companies.json';
+  
+  const companies = companiesData.companies;
 </script>
 
 <Background3D />
@@ -13,12 +17,9 @@
     <Hero />
   </section>
   
-  <!-- Companies Section (placeholder for task 7) -->
-  <section id="companies" class="section container">
-    <div class="glass-card" style="padding: 2rem; text-align: center;">
-      <h2 class="heading-2">Experience</h2>
-      <p class="body-normal">Company carousel will be implemented in task 7.</p>
-    </div>
+  <!-- Companies Section -->
+  <section id="companies" class="section">
+    <CompanyCarousel {companies} />
   </section>
   
   <!-- Projects Section (placeholder for task 8) -->

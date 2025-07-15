@@ -2,31 +2,31 @@
   "companies": [
     {
       "name": "Katapult",
-      "logo": "/assets/company-logos/katapult.png",
+      "logo": "/assets/company-logos/katapult.svg",
       "url": "https://katapult.com",
       "alt": "Katapult Logo"
     },
     {
       "name": "Q2",
-      "logo": "/assets/company-logos/q2.png",
+      "logo": "/assets/company-logos/q2.svg",
       "url": "https://q2.com",
       "alt": "Q2 Logo"
     },
     {
       "name": "Sector 5 Digital",
-      "logo": "/assets/company-logos/sector5digital.png",
+      "logo": "/assets/company-logos/sector5digital.svg",
       "url": "https://sector5digital.com",
       "alt": "Sector 5 Digital Logo"
     },
     {
       "name": "Universal Studios Florida",
-      "logo": "/assets/company-logos/universal-studios.png",
+      "logo": "/assets/company-logos/universal-studios.svg",
       "url": "https://universalorlando.com",
       "alt": "Universal Studios Florida Logo"
     },
     {
       "name": "Aktiver",
-      "logo": "/assets/company-logos/aktiver.png",
+      "logo": "/assets/company-logos/aktiver.svg",
       "url": "https://aktiver.com",
       "alt": "Aktiver Logo"
     }

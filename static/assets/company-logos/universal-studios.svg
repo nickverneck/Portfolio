@@ -1,0 +1,6 @@
+<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="80" fill="#1a1a1a" stroke="#333" stroke-width="2" rx="8"/>
+  <text x="100" y="35" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Universal</text>
+  <text x="100" y="50" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Studios</text>
+  <text x="100" y="65" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Florida</text>
+</svg>
