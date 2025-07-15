@@ -1,0 +1,36 @@
+{
+  "categories": [
+    {
+      "name": "Frontend Framework",
+      "skills": ["React", "Angular", "Svelte", "NextJS", "EmberJS", "Vue.js"]
+    },
+    {
+      "name": "Backend Framework",
+      "skills": ["Django", "NodeJS", "Express.js", "REST API"]
+    },
+    {
+      "name": "Programming Language",
+      "skills": ["Python", "JavaScript", "C#", "PHP", "HTML", "CSS"]
+    },
+    {
+      "name": "AI/ML",
+      "skills": ["ML Algorithms", "RAG", "Agentic framework", "Generative AI", "LLM", "Knowledge Graph", "CUDA"]
+    },
+    {
+      "name": "Database",
+      "skills": ["MySQL", "MongoDB", "Postgres"]
+    },
+    {
+      "name": "Cloud & DevOps",
+      "skills": ["AWS", "Azure DevOps", "Jenkins", "GitHub", "Linux"]
+    },
+    {
+      "name": "Data & Analytics",
+      "skills": ["Pandas", "Microsoft Excel"]
+    },
+    {
+      "name": "Styling & Preprocessing",
+      "skills": ["Sass", "CSS"]
+    }
+  ]
+}

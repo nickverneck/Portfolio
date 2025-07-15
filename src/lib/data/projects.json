@@ -1,0 +1,52 @@
+{
+  "projects": [
+    {
+      "name": "AI-Powered Portfolio",
+      "description": "Modern portfolio website built with Svelte and Three.js featuring glassmorphism design and interactive 3D backgrounds",
+      "technologies": ["Svelte", "Three.js", "CSS3", "JavaScript"],
+      "githubUrl": "https://github.com/username/ai-portfolio",
+      "featured": true,
+      "image": "/assets/projects/portfolio.png"
+    },
+    {
+      "name": "RAG Agent Framework",
+      "description": "Retrieval-Augmented Generation system for building intelligent chatbots with custom knowledge bases",
+      "technologies": ["Python", "LangChain", "OpenAI", "Vector DB"],
+      "githubUrl": "https://github.com/username/rag-framework",
+      "featured": true,
+      "image": "/assets/projects/rag-agent.png"
+    },
+    {
+      "name": "Real-Time Video AI",
+      "description": "Computer vision application for real-time video processing and object detection using CUDA acceleration",
+      "technologies": ["Python", "OpenCV", "CUDA", "PyTorch"],
+      "githubUrl": "https://github.com/username/video-ai",
+      "featured": true,
+      "image": "/assets/projects/video-ai.png"
+    },
+    {
+      "name": "React Dashboard",
+      "description": "Enterprise dashboard application with data visualization and real-time analytics",
+      "technologies": ["React", "D3.js", "Node.js", "MongoDB"],
+      "githubUrl": "https://github.com/username/react-dashboard",
+      "featured": false,
+      "image": "/assets/projects/dashboard.png"
+    },
+    {
+      "name": "Django REST API",
+      "description": "Scalable REST API backend with authentication, rate limiting, and comprehensive documentation",
+      "technologies": ["Django", "PostgreSQL", "Redis", "Docker"],
+      "githubUrl": "https://github.com/username/django-api",
+      "featured": false,
+      "image": "/assets/projects/django-api.png"
+    },
+    {
+      "name": "Vue.js E-commerce",
+      "description": "Full-stack e-commerce platform with payment integration and inventory management",
+      "technologies": ["Vue.js", "Express.js", "MySQL", "Stripe"],
+      "githubUrl": "https://github.com/username/vue-ecommerce",
+      "featured": false,
+      "image": "/assets/projects/ecommerce.png"
+    }
+  ]
+}
