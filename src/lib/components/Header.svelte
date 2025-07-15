@@ -4,14 +4,56 @@
   let isScrolled = false;
   let currentSection = '';
   
-  // Navigation items with icons
+  // Navigation items with SVG icons
   const navItems = [
-    { id: 'hero', label: 'Home', icon: '🏠' },
-    { id: 'companies', label: 'Experience', icon: '💼' },
-    { id: 'projects', label: 'Projects', icon: '🚀' },
-    { id: 'skills', label: 'Skills', icon: '⚡' },
-    { id: 'contact', label: 'Contact', icon: '📧' },
-    { id: 'licenses', label: 'Certifications', icon: '🏆' }
+    { 
+      id: 'hero', 
+      label: 'Home', 
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9,22 9,12 15,12 15,22"/>
+      </svg>` 
+    },
+    { 
+      id: 'companies', 
+      label: 'Experience', 
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+      </svg>` 
+    },
+    { 
+      id: 'projects', 
+      label: 'Projects', 
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+        <path d="M9 18h6"/>
+        <path d="M10 22h4"/>
+      </svg>` 
+    },
+    { 
+      id: 'skills', 
+      label: 'Skills', 
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/>
+      </svg>` 
+    },
+    { 
+      id: 'contact', 
+      label: 'Contact', 
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>` 
+    },
+    { 
+      id: 'licenses', 
+      label: 'Certifications', 
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="6"/>
+        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+      </svg>` 
+    }
   ];
   
   // Smooth scroll to section
@@ -125,7 +167,7 @@
         aria-current={currentSection === item.id ? 'page' : undefined}
         aria-label={item.label}
       >
-        <span class="nav-icon">{item.icon}</span>
+        <span class="nav-icon">{@html item.icon}</span>
         <span class="nav-label">{item.label}</span>
       </button>
     {/each}
@@ -284,9 +326,22 @@
   }
   
   .nav-icon {
-    font-size: 1.2rem;
-    margin-bottom: 2px;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 4px;
     display: block;
+    color: var(--text-secondary);
+    transition: color var(--transition-normal);
+  }
+  
+  .nav-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+  }
+  
+  .nav-bottom-item.active .nav-icon {
+    color: var(--text-primary);
   }
   
   .nav-label {
