@@ -1,12 +1,20 @@
 {
   "certifications": [
     {
+      "title": "The Oxford Artificial Intelligence Summit 2025: Autonomous AI Agents",
+      "institution": "University of Oxford",
+      "description": "Advanced summit covering autonomous AI agents, multi-agent systems, and the future of artificial intelligence in enterprise applications",
+      "url": "https://oxford.edu/ai-summit-2025",
+      "issueDate": "July 2025",
+      "logo": "/assets/company-logos/oxford_continuing_education_logo.jpeg"
+    },
+    {
       "title": "Building RAG Agents with LLMs",
       "institution": "NVIDIA",
       "description": "Advanced certification covering Retrieval-Augmented Generation implementation, vector databases, and LLM integration for building intelligent AI agents",
       "url": "https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-FX-15+V1",
       "issueDate": "2024",
-      "logo": "/assets/certifications/nvidia.png"
+      "logo": "/assets/company-logos/nvidia_logo.jpeg"
     },
     {
       "title": "Building Real-Time Video AI Applications",
@@ -14,7 +22,7 @@
       "description": "Comprehensive training on developing real-time computer vision applications using CUDA, DeepStream, and GPU acceleration",
       "url": "https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+C-IV-02+V1",
       "issueDate": "2024",
-      "logo": "/assets/certifications/nvidia.png"
+      "logo": "/assets/company-logos/nvidia_logo.jpeg"
     },
     {
       "title": "React.js Essential Training",
@@ -22,7 +30,7 @@
       "description": "Complete React.js fundamentals including components, state management, hooks, and modern React development practices",
       "url": "https://www.linkedin.com/learning/react-js-essential-training-14836121",
       "issueDate": "2023",
-      "logo": "/assets/certifications/linkedin-learning.png"
+      "logo": "/assets/company-logos/linkedin_logo.jpeg"
     },
     {
       "title": "Vue.js Essential Training",
@@ -30,7 +38,7 @@
       "description": "Comprehensive Vue.js framework training covering components, directives, routing, and state management with Vuex",
       "url": "https://www.linkedin.com/learning/vue-js-2-essential-training",
       "issueDate": "2023",
-      "logo": "/assets/certifications/linkedin-learning.png"
+      "logo": "/assets/company-logos/linkedin_logo.jpeg"
     }
   ]
 }
