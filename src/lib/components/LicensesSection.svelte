@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import licensesData from '$lib/data/licenses.json';
 
   let certifications = [];
   let loading = true;
@@ -7,12 +8,7 @@
 
   onMount(async () => {
     try {
-      const response = await fetch('/src/lib/data/licenses.json');
-      if (!response.ok) {
-        throw new Error(`Failed to load certifications: ${response.status}`);
-      }
-      const data = await response.json();
-      certifications = data.certifications;
+      certifications = licensesData.certifications;
     } catch (err) {
       console.error('Error loading certifications:', err);
       error = err.message;

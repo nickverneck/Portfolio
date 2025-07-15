@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { base } from '$app/paths';
+  import projectsData from '$lib/data/projects.json';
   
   let projects = [];
   let loading = true;
@@ -9,12 +9,7 @@
   // Load projects data from JSON
   onMount(async () => {
     try {
-      const response = await fetch(`${base}/data/projects.json`);
-      if (!response.ok) {
-        throw new Error(`Failed to load projects: ${response.status}`);
-      }
-      const data = await response.json();
-      projects = data.projects || [];
+      projects = projectsData.projects || [];
       loading = false;
     } catch (err) {
       console.error('Error loading projects:', err);
