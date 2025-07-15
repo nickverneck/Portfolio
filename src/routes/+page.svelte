@@ -6,6 +6,7 @@
   import ProjectsSection from '$lib/components/ProjectsSection.svelte';
   import SkillsSection from '$lib/components/SkillsSection.svelte';
   import ContactSection from '$lib/components/ContactSection.svelte';
+  import LicensesSection from '$lib/components/LicensesSection.svelte';
   import companiesData from '$lib/data/companies.json';
   
   const companies = companiesData.companies;
@@ -34,13 +35,8 @@
   <!-- Contact Section -->
   <ContactSection />
   
-  <!-- Licenses Section (placeholder for task 11) -->
-  <section id="licenses" class="section container">
-    <div class="glass-card" style="padding: 2rem; text-align: center;">
-      <h2 class="heading-2">Certifications</h2>
-      <p class="body-normal">Licenses and certifications will be implemented in task 11.</p>
-    </div>
-  </section>
+  <!-- Licenses Section -->
+  <LicensesSection />
 </main>
 
 <style>

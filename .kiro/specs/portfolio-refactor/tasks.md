@@ -75,7 +75,7 @@
   - Display Orlando, FL location, phone (407) 779-1178, email nicollas@gmail.com, LinkedIn and Instagram links
   - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-- [ ] 11. Build licenses and certifications component
+- [x] 11. Build licenses and certifications component
   - Create LicensesSection.svelte with certification cards
   - Implement glassmorphism card styling for each certification
   - Add external link functionality to certification verification pages
@@ -88,6 +88,7 @@
   - Implement smooth scrolling between sections
   - Add section transitions and animations
   - Ensure proper component ordering and spacing
+  - install playwright and create tests
   - Test responsive behavior across all breakpoints
   - _Requirements: 1.1, 1.2, 1.3, 1.4_
 
