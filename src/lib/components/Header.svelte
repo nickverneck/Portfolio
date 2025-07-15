@@ -43,15 +43,39 @@
     
     // Update active section based on scroll position
     const sections = navItems.map(item => document.getElementById(item.id)).filter(Boolean);
-    const scrollPosition = window.scrollY + 100;
+    const scrollPosition = window.scrollY + 150; // Offset for header height
     
-    for (let i = sections.length - 1; i >= 0; i--) {
+    let activeSection = '';
+    
+    // Find which section we're currently in
+    for (let i = 0; i < sections.length; i++) {
       const section = sections[i];
-      if (section && section.offsetTop <= scrollPosition) {
-        currentSection = section.id;
-        break;
+      if (section) {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        
+        // Check if scroll position is within this section's boundaries
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          activeSection = section.id;
+          break;
+        }
       }
     }
+    
+    // If no section is found (e.g., at very bottom), use the last section
+    if (!activeSection && sections.length > 0) {
+      const lastSection = sections[sections.length - 1];
+      if (lastSection && scrollPosition >= lastSection.offsetTop) {
+        activeSection = lastSection.id;
+      }
+    }
+    
+    // Default to hero if we're at the top
+    if (!activeSection) {
+      activeSection = 'hero';
+    }
+    
+    currentSection = activeSection;
   }
   
   // Handle escape key to close menu
