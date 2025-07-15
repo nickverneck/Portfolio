@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { base } from '$app/paths';
   import licensesData from '$lib/data/licenses.json';
 
   let certifications = [];
@@ -58,10 +59,14 @@
             <div class="cert-header">
               {#if cert.logo}
                 <img 
-                  src={cert.logo} 
+                  src={`${base}/${cert.logo}`} 
                   alt="{cert.institution} logo"
                   class="institution-logo"
                   loading="lazy"
+                  on:error={(e) => {
+                    console.error('Failed to load image:', `${base}/${cert.logo}`);
+                    e.target.style.display = 'none';
+                  }}
                 />
               {/if}
               <div class="cert-meta">
