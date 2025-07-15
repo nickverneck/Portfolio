@@ -349,34 +349,38 @@ export class ThreeBackground {
   updateParticles() {
     if (!this.particles) return;
 
-    this.time += 0.005 * this.options.animationSpeed;
+    this.time += 0.008 * this.options.animationSpeed;
     const positions = this.particles.geometry.attributes.position.array;
     const velocities = this.particles.geometry.attributes.velocity.array;
 
     for (let i = 0; i < this.options.particleCount; i++) {
       const i3 = i * 3;
 
-      // Very gentle floating motion with sine waves
-      const offsetX = Math.sin(this.time + i * 0.02) * 0.3;
-      const offsetY = Math.cos(this.time + i * 0.015) * 0.2;
-      const offsetZ = Math.sin(this.time * 0.5 + i * 0.01) * 0.1;
+      // Enhanced floating motion with multiple sine wave layers
+      const offsetX = Math.sin(this.time + i * 0.02) * 0.4 + Math.sin(this.time * 0.3 + i * 0.05) * 0.2;
+      const offsetY = Math.cos(this.time + i * 0.015) * 0.3 + Math.cos(this.time * 0.4 + i * 0.03) * 0.15;
+      const offsetZ = Math.sin(this.time * 0.5 + i * 0.01) * 0.2 + Math.cos(this.time * 0.2 + i * 0.02) * 0.1;
 
       positions[i3] += velocities[i3] * this.options.animationSpeed + offsetX;
       positions[i3 + 1] += velocities[i3 + 1] * this.options.animationSpeed + offsetY;
       positions[i3 + 2] += velocities[i3 + 2] * this.options.animationSpeed + offsetZ;
 
-      // Subtle mouse interaction - much gentler
+      // Enhanced mouse interaction with ripple effects
       if (this.options.mouseInteraction) {
         const mousePos = new THREE.Vector3(this.mouse.x * 300, this.mouse.y * 300, 0);
         const particlePos = new THREE.Vector3(positions[i3], positions[i3 + 1], positions[i3 + 2]);
         const distance = particlePos.distanceTo(mousePos);
         
-        if (distance < 150) {
-          const force = (150 - distance) / 150 * 0.5; // Much gentler force
+        if (distance < 200) {
+          const force = (200 - distance) / 200 * 0.8;
           const direction = particlePos.clone().sub(mousePos).normalize();
           
-          positions[i3] += direction.x * force * 0.5;
-          positions[i3 + 1] += direction.y * force * 0.5;
+          // Create ripple effect
+          const ripple = Math.sin(distance * 0.02 - this.time * 2) * 0.3;
+          
+          positions[i3] += direction.x * force * 0.7 + ripple;
+          positions[i3 + 1] += direction.y * force * 0.7 + ripple;
+          positions[i3 + 2] += direction.z * force * 0.3;
         }
       }
 
@@ -391,9 +395,34 @@ export class ThreeBackground {
 
     this.particles.geometry.attributes.position.needsUpdate = true;
 
-    // Very slow, subtle rotation of the entire system
-    this.particles.rotation.y += 0.0002 * this.options.animationSpeed;
-    this.particles.rotation.x += 0.0001 * this.options.animationSpeed;
+    // Enhanced topology movement - dynamic rotation and scaling
+    const rotationSpeed = 0.0003 * this.options.animationSpeed;
+    const scaleOscillation = 1 + Math.sin(this.time * 0.5) * 0.05; // Gentle breathing effect
+    
+    // Multi-axis rotation for more dynamic movement
+    this.particles.rotation.y += rotationSpeed * 1.5;
+    this.particles.rotation.x += rotationSpeed * 0.8;
+    this.particles.rotation.z += rotationSpeed * 0.3;
+    
+    // Apply gentle scaling oscillation
+    this.particles.scale.setScalar(scaleOscillation);
+    
+    // Move connections with particles if they exist
+    if (this.connections) {
+      this.connections.rotation.copy(this.particles.rotation);
+      this.connections.scale.copy(this.particles.scale);
+      
+      // Add slight offset to connections for layered movement
+      this.connections.rotation.y += rotationSpeed * 0.2;
+      this.connections.rotation.x -= rotationSpeed * 0.1;
+    }
+    
+    // Add gentle camera movement for more immersive feel
+    if (this.camera) {
+      this.camera.position.x = Math.sin(this.time * 0.1) * 20;
+      this.camera.position.y = Math.cos(this.time * 0.08) * 15;
+      this.camera.lookAt(0, 0, 0);
+    }
   }
 
   dispose() {
