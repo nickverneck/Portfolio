@@ -22,6 +22,31 @@
     setTimeout(() => titleVisible = true, 600);
     setTimeout(() => subtitleVisible = true, 1000);
   });
+
+  // Navigation functions
+  function scrollToProjects() {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      const elementTop = projectsSection.offsetTop;
+      const targetPosition = elementTop - 80; // Account for header offset
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  function scrollToContact() {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      const elementTop = contactSection.offsetTop;
+      const targetPosition = elementTop - 80; // Account for header offset
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
 </script>
 
 <section class="hero">
@@ -52,10 +77,18 @@
       </div>
       
       <div class="hero-cta" class:visible={subtitleVisible}>
-        <button class="glass-button cta-button" aria-label="View my work">
+        <button 
+          class="glass-button cta-button" 
+          aria-label="View my work"
+          on:click={scrollToProjects}
+        >
           View My Work
         </button>
-        <button class="glass-button cta-button secondary" aria-label="Get in touch">
+        <button 
+          class="glass-button cta-button secondary" 
+          aria-label="Get in touch"
+          on:click={scrollToContact}
+        >
           Get In Touch
         </button>
       </div>

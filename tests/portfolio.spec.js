@@ -195,6 +195,45 @@ test.describe('Component Integration Tests', () => {
     await expect(canvas).toBeVisible();
   });
 
+  test('should have working hero navigation buttons', async ({ page }) => {
+    await page.goto('/');
+    
+    // Wait for page to fully load
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
+    
+    // Check that both CTA buttons are visible and clickable
+    const viewWorkButton = page.locator('button', { hasText: 'View My Work' });
+    const getInTouchButton = page.locator('button', { hasText: 'Get In Touch' });
+    
+    await expect(viewWorkButton).toBeVisible();
+    await expect(getInTouchButton).toBeVisible();
+    
+    // Verify that target sections exist
+    await expect(page.locator('#projects')).toBeAttached();
+    await expect(page.locator('#contact')).toBeAttached();
+    
+    // Test "View My Work" button navigation
+    const initialScrollY = await page.evaluate(() => window.scrollY);
+    
+    await viewWorkButton.click();
+    await page.waitForTimeout(2000); // Wait for smooth scroll
+    
+    const scrollYAfterFirstClick = await page.evaluate(() => window.scrollY);
+    expect(scrollYAfterFirstClick).toBeGreaterThan(initialScrollY);
+    
+    // Reset to top for second test
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await page.waitForTimeout(500);
+    
+    // Test "Get In Touch" button navigation
+    await getInTouchButton.click();
+    await page.waitForTimeout(2000); // Wait for smooth scroll
+    
+    const scrollYAfterSecondClick = await page.evaluate(() => window.scrollY);
+    expect(scrollYAfterSecondClick).toBeGreaterThan(initialScrollY);
+  });
+
   test('should have header component', async ({ page }) => {
     await page.goto('/');
     

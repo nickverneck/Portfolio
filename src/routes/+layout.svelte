@@ -20,7 +20,6 @@
   :global(body) {
     margin: 0;
     padding: 0;
-    height: 100%;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: #0a0a0a;
     color: rgba(255, 255, 255, 0.9);
