@@ -17,7 +17,10 @@ const config = {
 			strict: true
 		}),
 		paths: {
-			base: process.env.NODE_ENV === 'production' ? '/portfolio-refactor' : ''
+			base: process.env.NODE_ENV === 'production' ? '/Portfolio' : ''
+		},
+		prerender: {
+			handleHttpError: 'warn'
 		}
 	}
 };

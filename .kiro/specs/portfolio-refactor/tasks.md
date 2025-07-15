@@ -92,14 +92,14 @@
   - Test responsive behavior across all breakpoints
   - _Requirements: 1.1, 1.2, 1.3, 1.4_
 
-- [-] 13. Optimize performance and add error handling
+- [x] 13. Optimize performance and add error handling
   - Implement lazy loading for non-critical components
   - Implement error boundaries for component failures
   - Add loading states for JSON data fetching
   - Optimize Three.js performance for mobile devices
   - _Requirements: 2.4, 8.3, 9.2_
 
-- [ ] 14. Configure GitHub Pages deployment
+- [-] 14. Configure GitHub Pages deployment
   - Set up GitHub Actions workflow for automated deployment
   - Configure static adapter for proper asset path handling
   - Test build process and static file generation
