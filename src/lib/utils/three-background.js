@@ -67,7 +67,17 @@ export class ThreeBackground {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.options.isMobile ? 1 : 2));
     this.renderer.setClearColor(0x000000, 0);
     
-    this.container.appendChild(this.renderer.domElement);
+    // Ensure canvas has correct styling
+    const canvas = this.renderer.domElement;
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-10';
+    canvas.style.pointerEvents = 'none';
+    
+    this.container.appendChild(canvas);
   }
 
   createParticleSystem() {

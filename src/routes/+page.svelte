@@ -57,7 +57,7 @@
 <style>
   .main-content {
     position: relative;
-    z-index: 1;
+    z-index: 10;
     padding-top: 4rem; /* Account for fixed header */
   }
   
@@ -71,7 +71,12 @@
   /* Adjust for mobile */
   @media (max-width: 47.9375em) {
     .main-content {
-      padding-top: 3.5rem;
+      padding-top: 0; /* No top header on mobile */
+      padding-bottom: 80px; /* Account for bottom navigation */
+    }
+    
+    .hero-section {
+      min-height: calc(100vh - 80px);
     }
   }
 </style>

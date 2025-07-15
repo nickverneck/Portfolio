@@ -36,7 +36,7 @@
   - Implement sticky header with transparency effects
   - _Requirements: 1.1, 1.2, 1.3_
 
-- [ ] 6. Implement hero section component
+- [-] 6. Implement hero section component
   - Create Hero.svelte with name, title, and subtitle display
   - Apply glassmorphism card styling for hero content
   - Add animated text reveals and responsive typography

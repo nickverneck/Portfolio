@@ -1,29 +1,18 @@
 <script>
   import { onMount } from 'svelte';
   
-  let isMenuOpen = false;
   let isScrolled = false;
   let currentSection = '';
   
-  // Navigation items
+  // Navigation items with icons
   const navItems = [
-    { id: 'hero', label: 'Home' },
-    { id: 'companies', label: 'Experience' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'contact', label: 'Contact' },
-    { id: 'licenses', label: 'Certifications' }
+    { id: 'hero', label: 'Home', icon: '🏠' },
+    { id: 'companies', label: 'Experience', icon: '💼' },
+    { id: 'projects', label: 'Projects', icon: '🚀' },
+    { id: 'skills', label: 'Skills', icon: '⚡' },
+    { id: 'contact', label: 'Contact', icon: '📧' },
+    { id: 'licenses', label: 'Certifications', icon: '🏆' }
   ];
-  
-  // Toggle mobile menu
-  function toggleMenu() {
-    isMenuOpen = !isMenuOpen;
-  }
-  
-  // Close mobile menu
-  function closeMenu() {
-    isMenuOpen = false;
-  }
   
   // Smooth scroll to section
   function scrollToSection(sectionId) {
@@ -34,7 +23,6 @@
         block: 'start'
       });
     }
-    closeMenu();
   }
   
   // Handle scroll events for sticky header and active section
@@ -78,28 +66,20 @@
     currentSection = activeSection;
   }
   
-  // Handle escape key to close menu
-  function handleKeydown(event) {
-    if (event.key === 'Escape' && isMenuOpen) {
-      closeMenu();
-    }
-  }
-  
   onMount(() => {
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('keydown', handleKeydown);
     
     // Initial scroll check
     handleScroll();
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('keydown', handleKeydown);
     };
   });
 </script>
 
-<header class="header" class:scrolled={isScrolled}>
+<!-- Desktop Header -->
+<header class="header-desktop hide-mobile" class:scrolled={isScrolled}>
   <div class="container">
     <div class="header-content">
       <!-- Logo/Brand -->
@@ -114,7 +94,7 @@
       </div>
       
       <!-- Desktop Navigation -->
-      <nav class="nav-desktop hide-mobile" aria-label="Main navigation">
+      <nav class="nav-desktop" aria-label="Main navigation">
         <ul class="nav-list">
           {#each navItems as item}
             <li class="nav-item">
@@ -130,82 +110,48 @@
           {/each}
         </ul>
       </nav>
-      
-      <!-- Mobile Menu Button -->
-      <button
-        class="menu-toggle show-mobile"
-        class:active={isMenuOpen}
-        on:click={toggleMenu}
-        aria-expanded={isMenuOpen}
-        aria-controls="mobile-menu"
-        aria-label="Toggle navigation menu"
-      >
-        <span class="menu-icon">
-          <span class="menu-line"></span>
-          <span class="menu-line"></span>
-          <span class="menu-line"></span>
-        </span>
-      </button>
     </div>
   </div>
-  
-  <!-- Mobile Navigation Menu -->
-  <nav 
-    class="nav-mobile show-mobile"
-    class:open={isMenuOpen}
-    id="mobile-menu"
-    aria-label="Mobile navigation"
-  >
-    <div class="nav-mobile-content">
-      <ul class="nav-mobile-list">
-        {#each navItems as item}
-          <li class="nav-mobile-item">
-            <button
-              class="nav-mobile-link"
-              class:active={currentSection === item.id}
-              on:click={() => scrollToSection(item.id)}
-              aria-current={currentSection === item.id ? 'page' : undefined}
-            >
-              {item.label}
-            </button>
-          </li>
-        {/each}
-      </ul>
-    </div>
-  </nav>
-  
-  <!-- Mobile Menu Overlay -->
-  {#if isMenuOpen}
-    <div 
-      class="menu-overlay show-mobile"
-      on:click={closeMenu}
-      on:keydown={(e) => e.key === 'Enter' && closeMenu()}
-      role="button"
-      tabindex="0"
-      aria-label="Close menu"
-    ></div>
-  {/if}
 </header>
 
+<!-- Mobile Bottom Navigation -->
+<nav class="nav-bottom show-mobile" aria-label="Mobile navigation">
+  <div class="nav-bottom-content">
+    {#each navItems as item}
+      <button
+        class="nav-bottom-item"
+        class:active={currentSection === item.id}
+        on:click={() => scrollToSection(item.id)}
+        aria-current={currentSection === item.id ? 'page' : undefined}
+        aria-label={item.label}
+      >
+        <span class="nav-icon">{item.icon}</span>
+        <span class="nav-label">{item.label}</span>
+      </button>
+    {/each}
+  </div>
+</nav>
+
 <style>
-  .header {
+  /* Desktop Header */
+  .header-desktop {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     transition: all var(--transition-normal);
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--glass-bg-secondary);
+    backdrop-filter: blur(var(--glass-blur-light));
+    -webkit-backdrop-filter: blur(var(--glass-blur-light));
+    border-bottom: 1px solid var(--glass-border);
   }
   
-  .header.scrolled {
+  .header-desktop.scrolled {
     background: var(--glass-bg-primary);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
-    border-bottom-color: var(--glass-border);
+    border-bottom-color: var(--glass-border-hover);
     box-shadow: var(--glass-shadow);
   }
   
@@ -289,168 +235,124 @@
     border-radius: 50%;
   }
   
-  /* Mobile Menu Toggle */
-  .menu-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: var(--space-sm);
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-normal);
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .menu-toggle:hover {
-    background: var(--glass-bg-secondary);
-  }
-  
-  .menu-icon {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    width: 18px;
-    height: 14px;
-  }
-  
-  .menu-line {
-    width: 100%;
-    height: 2px;
-    background: var(--text-primary);
-    border-radius: 1px;
-    transition: all var(--transition-fast);
-    transform-origin: center;
-  }
-  
-  .menu-toggle.active .menu-line:nth-child(1) {
-    transform: translateY(5px) rotate(45deg);
-  }
-  
-  .menu-toggle.active .menu-line:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-  }
-  
-  .menu-toggle.active .menu-line:nth-child(3) {
-    transform: translateY(-5px) rotate(-45deg);
-  }
-  
-  /* Mobile Navigation */
-  .nav-mobile {
-    position: absolute;
-    top: 100%;
+  /* Mobile Bottom Navigation */
+  .nav-bottom {
+    position: fixed;
+    bottom: 0;
     left: 0;
     right: 0;
+    z-index: 1000;
     background: var(--glass-bg-primary);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
-    border-bottom: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
-    transform: translateY(-100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: all var(--transition-normal);
+    border-top: 1px solid var(--glass-border);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
+    padding-bottom: env(safe-area-inset-bottom);
   }
   
-  .nav-mobile.open {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
+  .nav-bottom-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    max-width: 100%;
+    overflow-x: auto;
   }
   
-  .nav-mobile-content {
-    padding: var(--space-lg) 0;
-  }
-  
-  .nav-mobile-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .nav-mobile-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-  
-  .nav-mobile-item:last-child {
-    border-bottom: none;
-  }
-  
-  .nav-mobile-link {
+  .nav-bottom-item {
     background: none;
     border: none;
-    color: var(--text-secondary);
     cursor: pointer;
-    font-family: var(--font-primary);
-    font-size: 1rem;
-    font-weight: 500;
-    padding: var(--space-md) var(--space-lg);
-    width: 100%;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
     transition: all var(--transition-normal);
-    display: block;
+    min-width: 60px;
+    flex: 1;
+    max-width: 80px;
   }
   
-  .nav-mobile-link:hover {
-    color: var(--text-primary);
+  .nav-bottom-item:hover {
     background: var(--glass-bg-secondary);
   }
   
-  .nav-mobile-link.active {
-    color: var(--text-primary);
+  .nav-bottom-item.active {
     background: var(--glass-bg-accent);
-    position: relative;
   }
   
-  .nav-mobile-link.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: rgba(64, 224, 208, 0.8);
+  .nav-icon {
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+    display: block;
   }
   
-  /* Mobile Menu Overlay */
-  .menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: -1;
-    cursor: pointer;
+  .nav-label {
+    font-family: var(--font-primary);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  .nav-bottom-item.active .nav-label {
+    color: var(--text-primary);
   }
   
   /* Focus styles for accessibility */
   .brand-link:focus-visible,
   .nav-link:focus-visible,
-  .nav-mobile-link:focus-visible,
-  .menu-toggle:focus-visible {
+  .nav-bottom-item:focus-visible {
     outline: 2px solid rgba(64, 224, 208, 0.6);
     outline-offset: 2px;
   }
   
   /* Responsive adjustments */
   @media (max-width: 47.9375em) {
-    .header-content {
-      height: 3.5rem;
-    }
-    
-    .brand-text {
-      font-size: 1.25rem;
-    }
-    
     /* Reduce blur effects on mobile for better performance */
-    .header,
-    .nav-mobile {
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+    .nav-bottom {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    
+    .nav-bottom-content {
+      padding: var(--space-sm) var(--space-xs);
+    }
+    
+    .nav-bottom-item {
+      min-width: 50px;
+      padding: var(--space-xs);
+    }
+    
+    .nav-icon {
+      font-size: 1.1rem;
+    }
+    
+    .nav-label {
+      font-size: 0.65rem;
+    }
+  }
+  
+  /* Very small screens */
+  @media (max-width: 320px) {
+    .nav-label {
+      display: none;
+    }
+    
+    .nav-icon {
+      font-size: 1.3rem;
+      margin-bottom: 0;
+    }
+    
+    .nav-bottom-item {
+      min-width: 40px;
     }
   }
   
@@ -460,19 +362,17 @@
       background: #00ffff;
     }
     
-    .nav-mobile-link.active::before {
-      background: #00ffff;
+    .nav-bottom-item.active {
+      border: 2px solid #00ffff;
     }
   }
   
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
-    .header,
-    .nav-mobile,
+    .header-desktop,
     .nav-link,
-    .nav-mobile-link,
-    .menu-toggle,
-    .menu-line {
+    .nav-bottom-item,
+    .brand-link {
       transition: none;
     }
   }
