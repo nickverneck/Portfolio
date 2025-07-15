@@ -1,0 +1,17 @@
+{
+  "location": "Orlando, FL",
+  "phone": "(407) 779-1178",
+  "email": "nicollas@gmail.com",
+  "social": {
+    "linkedin": {
+      "url": "https://linkedin.com/in/nickverneck/",
+      "username": "@nickverneck",
+      "display": "LinkedIn"
+    },
+    "instagram": {
+      "url": "https://instagram.com/nickverneck",
+      "username": "@nickverneck", 
+      "display": "Instagram"
+    }
+  }
+}

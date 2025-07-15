@@ -5,6 +5,7 @@
   import CompanyCarousel from '$lib/components/CompanyCarousel.svelte';
   import ProjectsSection from '$lib/components/ProjectsSection.svelte';
   import SkillsSection from '$lib/components/SkillsSection.svelte';
+  import ContactSection from '$lib/components/ContactSection.svelte';
   import companiesData from '$lib/data/companies.json';
   
   const companies = companiesData.companies;
@@ -30,13 +31,8 @@
   <!-- Skills Section -->
   <SkillsSection />
   
-  <!-- Contact Section (placeholder for task 10) -->
-  <section id="contact" class="section container">
-    <div class="glass-card" style="padding: 2rem; text-align: center;">
-      <h2 class="heading-2">Contact</h2>
-      <p class="body-normal">Contact information will be implemented in task 10.</p>
-    </div>
-  </section>
+  <!-- Contact Section -->
+  <ContactSection />
   
   <!-- Licenses Section (placeholder for task 11) -->
   <section id="licenses" class="section container">
