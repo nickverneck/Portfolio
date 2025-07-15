@@ -3,6 +3,7 @@
   import Header from '$lib/components/Header.svelte';
   import Hero from '$lib/components/Hero.svelte';
   import CompanyCarousel from '$lib/components/CompanyCarousel.svelte';
+  import ProjectsSection from '$lib/components/ProjectsSection.svelte';
   import companiesData from '$lib/data/companies.json';
   
   const companies = companiesData.companies;
@@ -22,13 +23,8 @@
     <CompanyCarousel {companies} />
   </section>
   
-  <!-- Projects Section (placeholder for task 8) -->
-  <section id="projects" class="section container">
-    <div class="glass-card" style="padding: 2rem; text-align: center;">
-      <h2 class="heading-2">Projects</h2>
-      <p class="body-normal">Projects showcase will be implemented in task 8.</p>
-    </div>
-  </section>
+  <!-- Projects Section -->
+  <ProjectsSection />
   
   <!-- Skills Section (placeholder for task 9) -->
   <section id="skills" class="section container">

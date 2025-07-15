@@ -51,7 +51,7 @@
   - Load company data from JSON and handle external links
   - _Requirements: 3.1, 3.2, 3.3, 3.4_
 
-- [ ] 8. Build projects showcase component
+- [x] 8. Build projects showcase component
   - Create ProjectsSection.svelte with responsive grid layout
   - Implement glassmorphism project cards with hover effects
   - Add GitHub repository linking functionality
