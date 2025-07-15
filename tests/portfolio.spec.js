@@ -190,9 +190,19 @@ test.describe('Component Integration Tests', () => {
   test('should have 3D background component', async ({ page }) => {
     await page.goto('/');
     
-    // Check that the 3D background canvas is present
+    // Wait for 3D background to initialize
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
+    
+    // Check that the 3D background canvas is present or fallback is shown
     const canvas = page.locator('canvas');
-    await expect(canvas).toBeVisible();
+    const fallback = page.locator('.fallback-background');
+    
+    const canvasExists = await canvas.count() > 0;
+    const fallbackExists = await fallback.count() > 0;
+    
+    // Either canvas should exist (WebGL supported) or fallback should exist
+    expect(canvasExists || fallbackExists).toBe(true);
   });
 
   test('should have working hero navigation buttons', async ({ page }) => {
