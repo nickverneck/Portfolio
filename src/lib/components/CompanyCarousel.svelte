@@ -4,141 +4,101 @@
   
   export let companies = [];
   
-  let carousel;
-  let currentIndex = 0;
-  let isAutoPlaying = true;
-  let autoPlayInterval;
-  let startX = 0;
-  let currentX = 0;
+  let scrollContainer;
+  let isScrolling = false;
   let isDragging = false;
-  let translateX = 0;
+  let startX = 0;
+  let scrollLeft = 0;
+  let animationId;
+  let scrollSpeed = 0.5; // pixels per frame
   
-  // Auto-play functionality
-  function startAutoPlay() {
-    if (autoPlayInterval) clearInterval(autoPlayInterval);
-    autoPlayInterval = setInterval(() => {
-      if (isAutoPlaying) {
-        nextSlide();
+  // Create duplicated companies for infinite scroll effect
+  $: duplicatedCompanies = companies.length > 0 ? [...companies, ...companies, ...companies] : [];
+  
+  function startAutoScroll() {
+    if (animationId) cancelAnimationFrame(animationId);
+    
+    function animate() {
+      if (!isDragging && scrollContainer) {
+        scrollContainer.scrollLeft += scrollSpeed;
+        
+        // Reset scroll position for infinite effect
+        const maxScroll = scrollContainer.scrollWidth / 3; // Since we have 3 copies
+        if (scrollContainer.scrollLeft >= maxScroll) {
+          scrollContainer.scrollLeft = 0;
+        }
       }
-    }, 4000);
+      animationId = requestAnimationFrame(animate);
+    }
+    
+    animationId = requestAnimationFrame(animate);
   }
   
-  function stopAutoPlay() {
-    isAutoPlaying = false;
-    if (autoPlayInterval) {
-      clearInterval(autoPlayInterval);
+  function stopAutoScroll() {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
     }
   }
   
-  function resumeAutoPlay() {
-    isAutoPlaying = true;
-    startAutoPlay();
-  }
-  
-  // Navigation functions
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % companies.length;
-    updateCarousel();
-  }
-  
-  function prevSlide() {
-    currentIndex = currentIndex === 0 ? companies.length - 1 : currentIndex - 1;
-    updateCarousel();
-  }
-  
-  function goToSlide(index) {
-    currentIndex = index;
-    updateCarousel();
-  }
-  
-  function updateCarousel() {
-    if (carousel) {
-      translateX = -currentIndex * 100;
-    }
-  }
-  
-  // Touch/swipe support
-  function handleTouchStart(e) {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    stopAutoPlay();
-  }
-  
-  function handleTouchMove(e) {
-    if (!isDragging) return;
-    currentX = e.touches[0].clientX;
-    const diffX = currentX - startX;
-    
-    // Add some resistance to the drag
-    const resistance = Math.abs(diffX) > 50 ? 0.5 : 1;
-    translateX = -currentIndex * 100 + (diffX / carousel.offsetWidth * 100) * resistance;
-  }
-  
-  function handleTouchEnd() {
-    if (!isDragging) return;
-    
-    const diffX = currentX - startX;
-    const threshold = 50;
-    
-    if (Math.abs(diffX) > threshold) {
-      if (diffX > 0) {
-        prevSlide();
-      } else {
-        nextSlide();
-      }
-    } else {
-      updateCarousel();
-    }
-    
-    isDragging = false;
-    setTimeout(resumeAutoPlay, 1000);
-  }
-  
-  // Mouse drag support for desktop
+  // Mouse drag functionality
   function handleMouseDown(e) {
-    startX = e.clientX;
     isDragging = true;
-    stopAutoPlay();
+    startX = e.pageX - scrollContainer.offsetLeft;
+    scrollLeft = scrollContainer.scrollLeft;
+    scrollContainer.style.cursor = 'grabbing';
     e.preventDefault();
   }
   
   function handleMouseMove(e) {
     if (!isDragging) return;
-    currentX = e.clientX;
-    const diffX = currentX - startX;
-    
-    const resistance = Math.abs(diffX) > 50 ? 0.5 : 1;
-    translateX = -currentIndex * 100 + (diffX / carousel.offsetWidth * 100) * resistance;
+    e.preventDefault();
+    const x = e.pageX - scrollContainer.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    scrollContainer.scrollLeft = scrollLeft - walk;
   }
   
   function handleMouseUp() {
-    if (!isDragging) return;
-    
-    const diffX = currentX - startX;
-    const threshold = 50;
-    
-    if (Math.abs(diffX) > threshold) {
-      if (diffX > 0) {
-        prevSlide();
-      } else {
-        nextSlide();
-      }
-    } else {
-      updateCarousel();
-    }
-    
     isDragging = false;
-    setTimeout(resumeAutoPlay, 1000);
+    scrollContainer.style.cursor = 'grab';
+  }
+  
+  // Touch support
+  function handleTouchStart(e) {
+    isDragging = true;
+    startX = e.touches[0].pageX - scrollContainer.offsetLeft;
+    scrollLeft = scrollContainer.scrollLeft;
+  }
+  
+  function handleTouchMove(e) {
+    if (!isDragging) return;
+    const x = e.touches[0].pageX - scrollContainer.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainer.scrollLeft = scrollLeft - walk;
+  }
+  
+  function handleTouchEnd() {
+    isDragging = false;
+  }
+  
+  // Wheel scroll support
+  function handleWheel(e) {
+    e.preventDefault();
+    scrollContainer.scrollLeft += e.deltaY;
   }
   
   // Handle company logo click
-  function handleCompanyClick(company) {
-    window.open(company.url, '_blank', 'noopener,noreferrer');
+  function handleCompanyClick(company, e) {
+    // Only open link if not dragging
+    if (!isDragging) {
+      window.open(company.url, '_blank', 'noopener,noreferrer');
+    }
+    e.preventDefault();
   }
   
   onMount(() => {
-    if (companies.length > 1) {
-      startAutoPlay();
+    if (companies.length > 0) {
+      startAutoScroll();
     }
     
     // Add global mouse event listeners
@@ -149,7 +109,7 @@
     document.addEventListener('mouseup', handleGlobalMouseUp);
     
     return () => {
-      if (autoPlayInterval) clearInterval(autoPlayInterval);
+      stopAutoScroll();
       document.removeEventListener('mousemove', handleGlobalMouseMove);
       document.removeEventListener('mouseup', handleGlobalMouseUp);
     };
@@ -160,86 +120,35 @@
   <div class="container">
     <h2 class="section-title">Companies I've Worked With</h2>
     
-    <div class="carousel-container">
-      <!-- Navigation arrows -->
-      {#if companies.length > 1}
-        <button 
-          class="nav-arrow nav-arrow-left glass-button"
-          on:click={prevSlide}
-          on:mouseenter={stopAutoPlay}
-          on:mouseleave={resumeAutoPlay}
-          aria-label="Previous company"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15,18 9,12 15,6"></polyline>
-          </svg>
-        </button>
-        
-        <button 
-          class="nav-arrow nav-arrow-right glass-button"
-          on:click={nextSlide}
-          on:mouseenter={stopAutoPlay}
-          on:mouseleave={resumeAutoPlay}
-          aria-label="Next company"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9,18 15,12 9,6"></polyline>
-          </svg>
-        </button>
-      {/if}
-      
-      <!-- Carousel -->
-      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-      <div 
-        class="carousel"
-        role="region"
-        aria-label="Company carousel"
-        bind:this={carousel}
-        on:touchstart={handleTouchStart}
-        on:touchmove={handleTouchMove}
-        on:touchend={handleTouchEnd}
-        on:mousedown={handleMouseDown}
-        on:mouseenter={stopAutoPlay}
-        on:mouseleave={resumeAutoPlay}
-      >
-        <div 
-          class="carousel-track"
-          style="transform: translateX({translateX}%); transition: {isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)'}"
-        >
-          {#each companies as company, index}
-            <div class="company-card glass-card">
-              <button
-                class="company-logo-button"
-                on:click={() => handleCompanyClick(company)}
-                aria-label="Visit {company.name} website"
-              >
-                <img 
-                  src={base + company.logo} 
-                  alt={company.alt}
-                  class="company-logo"
-                  loading="lazy"
-                />
-                <div class="company-name">{company.name}</div>
-              </button>
-            </div>
-          {/each}
-        </div>
+    <!-- Infinite Scroll Container -->
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <div 
+      class="scroll-container"
+      role="region"
+      aria-label="Company logos carousel - drag to scroll"
+      bind:this={scrollContainer}
+      on:mousedown={handleMouseDown}
+      on:touchstart={handleTouchStart}
+      on:touchmove={handleTouchMove}
+      on:touchend={handleTouchEnd}
+      on:wheel={handleWheel}
+    >
+      <div class="logos-track">
+        {#each duplicatedCompanies as company, index}
+          <button
+            class="logo-item"
+            on:click={(e) => handleCompanyClick(company, e)}
+            aria-label="Visit {company.name} website"
+          >
+            <img 
+              src={base + company.logo} 
+              alt={company.alt}
+              class="company-logo"
+              loading="lazy"
+            />
+          </button>
+        {/each}
       </div>
-      
-      <!-- Dots indicator -->
-      {#if companies.length > 1}
-        <div class="carousel-dots">
-          {#each companies as _, index}
-            <button
-              class="dot {index === currentIndex ? 'active' : ''}"
-              on:click={() => goToSlide(index)}
-              on:mouseenter={stopAutoPlay}
-              on:mouseleave={resumeAutoPlay}
-              aria-label="Go to company {index + 1}"
-            ></button>
-          {/each}
-        </div>
-      {/if}
     </div>
   </div>
 </section>
@@ -265,157 +174,67 @@
     font-family: 'Space Grotesk', sans-serif;
   }
   
-  .carousel-container {
-    position: relative;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .carousel {
-    overflow: hidden;
-    border-radius: 20px;
+  .scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
     cursor: grab;
     user-select: none;
+    padding: 2rem 0;
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
   }
   
-  .carousel:active {
+  .scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  .scroll-container:active {
     cursor: grabbing;
   }
   
-  .carousel-track {
+  .logos-track {
     display: flex;
-    width: 100%;
-  }
-  
-  .company-card {
-    flex: 0 0 100%;
-    padding: 3rem 2rem;
-    display: flex;
+    gap: 3rem;
     align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    margin: 0;
-    transition: all 0.3s ease;
+    width: max-content;
+    animation: none; /* We'll handle animation with JS */
   }
   
-  .company-card:hover {
-    background: rgba(255, 255, 255, 0.12);
-    transform: translateY(-2px);
-  }
-  
-  .company-logo-button {
+  .logo-item {
     background: none;
     border: none;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
     padding: 1rem;
     border-radius: 12px;
     transition: all 0.3s ease;
-    color: rgba(255, 255, 255, 0.9);
-  }
-  
-  .company-logo-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: scale(1.05);
-  }
-  
-  .company-logo {
-    max-width: 200px;
-    max-height: 80px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    filter: brightness(0.9) contrast(1.1);
-    transition: filter 0.3s ease;
-  }
-  
-  .company-logo-button:hover .company-logo {
-    filter: brightness(1.1) contrast(1.2);
-  }
-  
-  .company-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-align: center;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-  }
-  
-  .company-logo-button:hover .company-name {
-    opacity: 1;
-  }
-  
-  .nav-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .nav-arrow:hover {
-    color: rgba(255, 255, 255, 1);
-    transform: translateY(-50%) scale(1.1);
-  }
-  
-  .nav-arrow-left {
-    left: -24px;
-  }
-  
-  .nav-arrow-right {
-    right: -24px;
-  }
-  
-  .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-  }
-  
-  .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .dot:hover {
-    background: rgba(255, 255, 255, 0.6);
-    transform: scale(1.2);
-  }
-  
-  .dot.active {
-    background: rgba(255, 255, 255, 0.9);
-    transform: scale(1.3);
-  }
-  
-  /* Glass button styling */
-  .glass-button {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
-  .glass-button:hover {
-    background: rgba(255, 255, 255, 0.2);
+  .logo-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-4px) scale(1.05);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .company-logo {
+    max-width: 120px;
+    max-height: 60px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0.8) contrast(1.1);
+    transition: filter 0.3s ease;
+  }
+  
+  .logo-item:hover .company-logo {
+    filter: brightness(1) contrast(1.2);
   }
   
   /* Mobile responsiveness */
@@ -433,49 +252,40 @@
       margin-bottom: 2rem;
     }
     
-    .company-card {
-      padding: 2rem 1rem;
+    .scroll-container {
+      padding: 1.5rem 0;
+    }
+    
+    .logos-track {
+      gap: 2rem;
+    }
+    
+    .logo-item {
+      padding: 0.75rem;
     }
     
     .company-logo {
-      max-width: 150px;
-      max-height: 60px;
-    }
-    
-    .nav-arrow {
-      width: 40px;
-      height: 40px;
-    }
-    
-    .nav-arrow-left {
-      left: -20px;
-    }
-    
-    .nav-arrow-right {
-      right: -20px;
-    }
-    
-    .company-name {
-      font-size: 1rem;
+      max-width: 100px;
+      max-height: 50px;
     }
   }
   
   @media (max-width: 480px) {
-    .nav-arrow-left {
-      left: -10px;
+    .section-title {
+      font-size: 1.75rem;
     }
     
-    .nav-arrow-right {
-      right: -10px;
+    .logos-track {
+      gap: 1.5rem;
     }
     
-    .company-card {
-      padding: 1.5rem 0.5rem;
+    .logo-item {
+      padding: 0.5rem;
     }
     
     .company-logo {
-      max-width: 120px;
-      max-height: 50px;
+      max-width: 80px;
+      max-height: 40px;
     }
   }
 </style>
