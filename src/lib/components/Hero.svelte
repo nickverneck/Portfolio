@@ -27,11 +27,9 @@
   function scrollToProjects() {
     const projectsSection = document.getElementById('projects');
     if (projectsSection) {
-      const elementTop = projectsSection.offsetTop;
-      const targetPosition = elementTop - 80; // Account for header offset
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
+      projectsSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
       });
     }
   }
@@ -39,11 +37,9 @@
   function scrollToContact() {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
-      const elementTop = contactSection.offsetTop;
-      const targetPosition = elementTop - 80; // Account for header offset
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
+      contactSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
       });
     }
   }
@@ -140,10 +136,7 @@
   
   .hero-name {
     margin-bottom: var(--space-md);
-    background: linear-gradient(135deg, var(--text-primary), rgba(64, 224, 208, 0.8));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text-primary);
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -387,8 +380,6 @@
   /* High contrast mode */
   @media (prefers-contrast: high) {
     .hero-name {
-      background: none;
-      -webkit-text-fill-color: var(--text-primary);
       color: var(--text-primary);
     }
     

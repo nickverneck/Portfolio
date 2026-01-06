@@ -22,7 +22,7 @@
     padding: 0;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: #0a0a0a;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-primary);
     overflow-x: hidden;
   }
 
@@ -36,12 +36,12 @@
   }
 
   :global(a) {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-secondary);
     text-decoration: none;
     transition: color 0.3s ease;
   }
-
+  
   :global(a:hover) {
-    color: rgba(255, 255, 255, 1);
+    color: var(--text-primary);
   }
 </style>

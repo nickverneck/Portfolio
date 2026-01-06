@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import Background3D from '$lib/components/Background3D.svelte';
-  import Header from '$lib/components/Header.svelte';
+  import SideNav from '$lib/components/SideNav.svelte';
   import Hero from '$lib/components/Hero.svelte';
   import CompanyCarousel from '$lib/components/CompanyCarousel.svelte';
   import ProjectsSection from '$lib/components/ProjectsSection.svelte';
@@ -11,6 +11,7 @@
   import companiesData from '$lib/data/companies.json';
   
   const companies = companiesData.companies;
+  let isNavExpanded = false;
 
   // Smooth scrolling implementation
   onMount(() => {
@@ -42,9 +43,9 @@
 </script>
 
 <Background3D />
-<Header />
+<SideNav bind:isExpanded={isNavExpanded} />
 
-<main class="main-content">
+<main class="main-content" class:nav-expanded={isNavExpanded}>
   <!-- Hero Section -->
   <div id="hero" class="hero-section">
     <Hero />
@@ -75,7 +76,12 @@
   .main-content {
     position: relative;
     z-index: 10;
-    padding-top: 4rem; /* Account for fixed header */
+    padding-left: var(--side-nav-collapsed);
+    transition: padding-left var(--transition-normal);
+  }
+
+  .main-content.nav-expanded {
+    padding-left: var(--side-nav-expanded);
   }
   
   /* Section base styles */
@@ -83,7 +89,7 @@
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    scroll-margin-top: 5rem; /* For smooth scroll offset */
+    scroll-margin-top: 2rem;
   }
   
   :global(.section.animate-in) {
@@ -111,7 +117,7 @@
     font-weight: 700;
     text-align: center;
     margin-bottom: 3rem;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(64, 224, 208, 0.8));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(64, 224, 208, 0.85));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -127,12 +133,15 @@
   /* Responsive design */
   @media (max-width: 768px) {
     .main-content {
-      padding-top: 0; /* No top header on mobile */
-      padding-bottom: 80px; /* Account for bottom navigation */
+      padding-left: var(--side-nav-collapsed);
+    }
+
+    .main-content.nav-expanded {
+      padding-left: var(--side-nav-collapsed);
     }
     
     .hero-section {
-      min-height: calc(100vh - 80px);
+      min-height: 100vh;
     }
     
     .section-container {
@@ -149,7 +158,7 @@
     }
     
     .section {
-      scroll-margin-top: 2rem;
+      scroll-margin-top: 1.5rem;
     }
   }
   
