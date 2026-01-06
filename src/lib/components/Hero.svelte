@@ -4,7 +4,7 @@
   // Hero content data
   const heroData = {
     name: "Nicollas Verneck",
-    title: "Full Stack Developer",
+    title: "Solutions Architect",
     subtitle: "Crafting innovative solutions with modern web technologies and AI"
   };
   
@@ -52,7 +52,7 @@
         <h1 
           class="hero-name heading-1" 
           class:visible={nameVisible}
-          aria-label="Nicollas Verneck - Full Stack Developer"
+          aria-label="Nicollas Verneck - Solutions Architect"
         >
           {heroData.name}
         </h1>

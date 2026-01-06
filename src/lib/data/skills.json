@@ -6,19 +6,19 @@
     },
     {
       "name": "Backend Framework",
-      "skills": ["Django", "NodeJS", "Express.js", "REST API"]
+      "skills": ["Django", "NodeJS", "Express.js", "REST API", "Axum", "Loco", "Hono"]
     },
     {
       "name": "Programming Language",
-      "skills": ["Python", "JavaScript", "C#", "PHP", "HTML", "CSS"]
+      "skills": ["Python", "JavaScript", "C#", "PHP", "HTML", "CSS", "Rust"]
     },
     {
       "name": "AI/ML",
-      "skills": ["ML Algorithms", "RAG", "Agentic framework", "Generative AI", "LLM", "Knowledge Graph", "CUDA"]
+      "skills": ["ML Algorithms", "RAG", "Agentic framework", "Generative AI", "LLM", "Knowledge Graph", "CUDA", "Genetic Algorithm", "PPO RL Training"]
     },
     {
       "name": "Database",
-      "skills": ["MySQL", "MongoDB", "Postgres"]
+      "skills": ["MySQL", "MongoDB", "Postgres", "Redis"]
     },
     {
       "name": "Cloud & DevOps",
