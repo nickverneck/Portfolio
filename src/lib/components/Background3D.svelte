@@ -222,6 +222,13 @@
     ctx.drawImage(gridLayer, 0, 0, width, height);
   }
 
+  function cancelFrame() {
+    if (frameId && typeof cancelAnimationFrame === 'function') {
+      cancelAnimationFrame(frameId);
+      frameId = null;
+    }
+  }
+
   function renderFrame(delta) {
     ctx.clearRect(0, 0, width, height);
     drawGrid();
@@ -343,7 +350,7 @@
     const handleMotion = event => {
       reduceMotion = event.matches;
       if (reduceMotion) {
-        cancelAnimationFrame(frameId);
+        cancelFrame();
         renderFrame(0);
       } else {
         lastTime = 0;
@@ -362,12 +369,12 @@
     return () => {
       motionQuery[removeMotionListener]('change', handleMotion);
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(frameId);
+      cancelFrame();
     };
   });
 
   onDestroy(() => {
-    cancelAnimationFrame(frameId);
+    cancelFrame();
   });
 </script>
 
