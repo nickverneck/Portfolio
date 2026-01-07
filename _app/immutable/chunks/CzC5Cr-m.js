@@ -1,0 +1,1 @@
+const n="Orlando, FL",c="nicollas@gmail.com",a={linkedin:{url:"https://linkedin.com/in/nickverneck/",username:"@nickverneck",display:"LinkedIn"},instagram:{url:"https://instagram.com/nickverneck",username:"@nickverneck",display:"Instagram"}},i={location:n,email:c,social:a};export{i as default,c as email,n as location,a as social};
