@@ -38,10 +38,17 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Prepare Pages root
+        run: |
+          rm -rf .pages
+          mkdir .pages
+          cp -R build/. .pages/
+          touch .pages/.nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: build
+          path: .pages
 
   deploy:
     environment:
